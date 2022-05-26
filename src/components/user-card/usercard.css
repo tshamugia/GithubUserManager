@@ -1,0 +1,9 @@
+.user-card {
+  margin: 15px;
+}
+
+.card-title {
+  color: gray;
+  margin-bottom: 2px;
+  font-size: 1rem;
+}
