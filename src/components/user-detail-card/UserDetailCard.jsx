@@ -4,11 +4,10 @@ import { useParams } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
 import { FavoritesContext } from '../../context/FavoritesContext';
 import Modal from '../../components/modal/Modal';
-
-const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
+import { ForUserDetailPage } from '../../http/http';
 
 export default function UserDetailCard() {
-  const { error, setLoading, setError } = useContext(AppContext);
+  const { error, setError } = useContext(AppContext);
   const { favorites, setFavorites } = useContext(FavoritesContext);
   const [userInfo, setUserInfo] = useState([]);
   const [showModal, setShowModal] = useState([false, '']);
@@ -17,22 +16,9 @@ export default function UserDetailCard() {
   const isFavorites = favorites.some((item) => item.login == userName.id);
 
   useEffect(() => {
-    setLoading(true);
-    fetch(`https://api.github.com/users/${userName.id}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Token ' + `${GITHUB_TOKEN}`,
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error('Something went wrong!!!');
-      })
+    ForUserDetailPage(userName)
       .then((data) => setUserInfo(data))
-      .catch((error) => setError(error.message))
-      .finally(() => setLoading(false));
+      .catch((error) => setError(error.message));
   }, []);
 
   function addToFavorites(e) {
@@ -41,7 +27,9 @@ export default function UserDetailCard() {
   }
   function removeFromFavorites(e) {
     e.preventDefault();
-    setFavorites(favorites.filter((users) => users.login !== userInfo.login));
+    setFavorites(
+      favorites.filter((userInfo) => userInfo.login !== userInfo.login)
+    );
     setShowModal(false);
   }
   return (
@@ -54,7 +42,7 @@ export default function UserDetailCard() {
             {!isFavorites ? (
               <Button
                 variant="primary "
-                className="mb-2"
+                className="mb-2 "
                 onClick={addToFavorites}
               >
                 Add To Favorites
@@ -73,22 +61,26 @@ export default function UserDetailCard() {
             <ListGroup variant="flush">
               <ListGroupItem>
                 <Card.Title>
-                  <strong>Name:</strong> {userInfo.name}
+                  <strong>Name:</strong>
+                  <span className="text-info"> {userInfo.name}</span>
                 </Card.Title>
               </ListGroupItem>
               <ListGroupItem>
                 <Card.Title>
-                  <strong>BIO:</strong> {userInfo.bio}
+                  <strong>BIO:</strong>{' '}
+                  <span className="text-info"> {userInfo.bio}</span>
                 </Card.Title>
               </ListGroupItem>
               <ListGroupItem>
                 <Card.Title>
-                  <strong>Followers:</strong> {userInfo.followers}
+                  <strong>Followers:</strong>{' '}
+                  <span className="text-info"> {userInfo.followers}</span>
                 </Card.Title>
               </ListGroupItem>
               <ListGroupItem>
                 <Card.Title>
-                  <strong>Following:</strong> {userInfo.following}
+                  <strong>Following:</strong>{' '}
+                  <span className="text-info">{userInfo.following}</span>
                 </Card.Title>
               </ListGroupItem>
             </ListGroup>

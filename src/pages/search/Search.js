@@ -27,7 +27,7 @@ export function Search() {
     fetch(`https://api.github.com/users/${search}`, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Token ' + `${GITHUB_TOKEN}`,
+        Authorization: 'Bearer ' + `${GITHUB_TOKEN}`,
       },
     })
       .then((response) => {

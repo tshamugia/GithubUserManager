@@ -3,26 +3,17 @@ import { Card, Row, Col } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 
 import { AppContext } from '../../context/AppContext';
-
-const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
+import { ForUserRepositories } from '../../http/http';
 
 export default function Organization() {
   const [organizations, setOrganizations] = useState([]);
-  const { error, setError, setLoading } = useContext(AppContext);
+  const { error, setError } = useContext(AppContext);
   const userName = useParams();
 
   useEffect(() => {
-    setLoading(true);
-    fetch(`https://api.github.com/users/${userName.id}/orgs`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Token ' + `${GITHUB_TOKEN}`,
-      },
-    })
-      .then((response) => response.json())
+    ForUserRepositories(userName)
       .then((data) => setOrganizations(data))
-      .catch((error) => setError(error.message))
-      .finally(() => setLoading(false));
+      .catch((error) => setError(error.message));
   }, []);
 
   return (

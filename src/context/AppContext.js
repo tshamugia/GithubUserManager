@@ -1,37 +1,31 @@
 import { createContext, useEffect, useState } from 'react';
+import { GithubTopUsers, GithubUserDetailInfo } from '../http/http';
 
-const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
-
-const AppContext = createContext({ users: [] });
+const AppContext = createContext([]);
 
 function AppProvider({ children }) {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [favorites, setFavorites] = useState([]);
+  const [userDetail, setUserDetail] = useState([]);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
     setLoading(true);
-    fetch(
-      `https://api.github.com/search/users?q=followers:%3E=1000&page=${page}&per_page=20`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Token ' + `${GITHUB_TOKEN}`,
-        },
-      }
-    )
-      .then((responce) => {
-        if (responce.ok) {
-          return responce.json();
-        }
-        throw new Error('Something went wrong!!!');
-      })
-      .then((data) => setUsers((prev) => [...prev, data.items]))
+    GithubTopUsers(page)
+      .then((data) => setUsers(data.items))
       .catch((error) => setError(error.message))
       .finally(() => setLoading(false));
   }, [page]);
+
+  useEffect(() => {
+    users.map((user) =>
+      GithubUserDetailInfo(user)
+        .then((data) => setUserDetail((prev) => [...prev, data]))
+        .catch((error) => setError(error.message))
+    );
+  }, [users]);
 
   return (
     <AppContext.Provider
@@ -45,6 +39,7 @@ function AppProvider({ children }) {
         error,
         setPage,
         page,
+        userDetail,
       }}
     >
       {children}

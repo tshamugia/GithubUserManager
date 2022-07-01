@@ -2,26 +2,17 @@ import { Card } from 'react-bootstrap';
 import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
-
-const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
+import { ForUserOrgs } from '../../http/http';
 
 export default function Repository() {
   const [repos, setRepos] = useState([]);
-  const { error, setError, setLoading } = useContext(AppContext);
+  const { error, setError } = useContext(AppContext);
   const userName = useParams();
 
   useEffect(() => {
-    setLoading(true);
-    fetch(`https://api.github.com/users/${userName.id}/repos`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Token ' + `${GITHUB_TOKEN}`,
-      },
-    })
-      .then((response) => response.json())
+    ForUserOrgs(userName)
       .then((data) => setRepos(data))
-      .catch((error) => setError(error.message))
-      .finally(() => setLoading(false));
+      .catch((error) => setError(error.message));
   }, []);
 
   return (
@@ -30,6 +21,7 @@ export default function Repository() {
         <h2>Repositories</h2>
       </div>
       {error && <h1>{error.message}</h1>}
+
       {repos.slice(0, 10).map((repo) => (
         <Card style={{ width: '53.5rem' }} className="mt-2" key={repo.id}>
           <Card.Body className="shadow">
