@@ -24,7 +24,7 @@ export function Favorite() {
       <Header />
       <Container>
         <div className="bg-primary text-center text-white mt-3 rounded">
-          <h2>Favorites</h2>
+          <h2>Favourites</h2>
         </div>
 
         <Row md={4}>
@@ -33,21 +33,24 @@ export function Favorite() {
               <Card style={{ width: '16rem' }} className="user-card shadow">
                 <Card.Img variant="top" src={user.avatar_url} />
                 <Card.Body>
-                  <Card.Title className="card-title">
-                    Username: <span>{user.name.toUpperCase()}</span>
+                  <Card.Title className="card-title text-info">
+                    <span>
+                      <strong>{user.name.toUpperCase()}</strong>
+                    </span>
                   </Card.Title>
-                  <Card.Title className="card-title">
-                    Repository: <span>{user.public_repos}</span>
+                  <Card.Title className="text-primary">
+                    Followers: {user.followers}
                   </Card.Title>
-                  <Card.Title className="card-title">
-                    Followers: <span>{user.followers}</span>
+                  <Card.Title className="text-primary">
+                    Followings: {user.followings}
                   </Card.Title>
-                  <Card.Title className="card-title">
-                    Following: <span>{user.following}</span>
+                  <Card.Title className="text-primary">
+                    Repository: {user.public_repos}
                   </Card.Title>
+
                   <Link to={ROUTES.USER.replace(':id', user.login)}>
-                    <Button variant="primary" className="mt-3 shadow">
-                      Read More...
+                    <Button variant="primary" className="mt-3 shadow ">
+                      Details...
                     </Button>
                   </Link>
                   <Button
@@ -63,7 +66,7 @@ export function Favorite() {
           ))}
           {showModal[0] && (
             <Modal>
-              <h1>Remove User From Favorites ?</h1>
+              <h1>Remove User From Favourites ?</h1>
               <Button
                 variant="primary"
                 className="mt-3 ms-2"

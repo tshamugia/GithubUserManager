@@ -16,7 +16,6 @@ export function Registration() {
   });
   const [err, setErr] = useState([]);
   const navigate = useNavigate();
-  console.log('from state->', err);
 
   function inputHandler(e) {
     setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -28,7 +27,6 @@ export function Registration() {
       await createUser(user);
       navigate(ROUTES.SIGNIN, { state: { success: true } });
     } catch (error) {
-      console.log('from error->', error);
       setErr(error.response.data.message);
     }
   }

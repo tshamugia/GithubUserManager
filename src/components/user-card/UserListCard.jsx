@@ -9,7 +9,7 @@ export function UserListCard() {
   const { userDetail } = useContext(AppContext);
 
   return (
-    <Row md={4}>
+    <Row lg={4} md={3} sm={2}>
       {userDetail.map((user) => (
         <Col className="mt-3" key={user.id}>
           <Card style={{ width: '16rem' }} className="user-card shadow">
@@ -17,14 +17,14 @@ export function UserListCard() {
             <Card.Body>
               <Card.Title className="card-title text-info">
                 <span>
-                  <strong>{user.name.toUpperCase()}</strong>
+                  <strong>{user.name}</strong>
                 </span>
               </Card.Title>
               <Card.Title className="text-primary">
                 Followers: {user.followers}
               </Card.Title>
               <Card.Title className="text-primary">
-                Followings: {user.followings}
+                Followings: {user.following}
               </Card.Title>
               <Card.Title className="text-primary">
                 Repository: {user.public_repos}
@@ -32,7 +32,7 @@ export function UserListCard() {
 
               <Link to={ROUTES.USER.replace(':id', user.login)}>
                 <Button variant="primary" className="mt-3 shadow ">
-                  Read More...
+                  Details...
                 </Button>
               </Link>
             </Card.Body>

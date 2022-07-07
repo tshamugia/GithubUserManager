@@ -78,21 +78,23 @@ export function Search() {
                 <Card style={{ width: '16rem' }} className="user-card shadow">
                   <Card.Img variant="top" src={user.avatar_url} />
                   <Card.Body>
-                    <Card.Title className="card-title">
-                      Username: {user.login}
+                    <Card.Title className="card-title text-info">
+                      <span>
+                        <strong>{user.name.toUpperCase()}</strong>
+                      </span>
                     </Card.Title>
-                    <Card.Title className="card-title">
-                      Repository:{user.public_repos}
-                    </Card.Title>
-                    <Card.Title className="card-title">
+                    <Card.Title className="text-primary">
                       Followers: {user.followers}
                     </Card.Title>
-                    <Card.Title className="card-title">
-                      Following:{user.following}
+                    <Card.Title className="text-primary">
+                      Followings: {user.followings}
+                    </Card.Title>
+                    <Card.Title className="text-primary">
+                      Repository: {user.public_repos}
                     </Card.Title>
 
                     <Link to={ROUTES.USER.replace(':id', user.login)}>
-                      <Button variant="primary" className="mt-3">
+                      <Button variant="primary" className="mt-3 shadow ">
                         Read More...
                       </Button>
                     </Link>

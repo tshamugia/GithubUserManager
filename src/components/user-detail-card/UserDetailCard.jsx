@@ -45,7 +45,7 @@ export default function UserDetailCard() {
                 className="mb-2 "
                 onClick={addToFavorites}
               >
-                Add To Favorites
+                Add To Favourites
               </Button>
             ) : (
               <Button
@@ -54,7 +54,7 @@ export default function UserDetailCard() {
                 onClick={() => setShowModal([true, userInfo.login])}
               >
                 <i className="fa fa-star" aria-hidden="true"></i>
-                Remove From Favorites
+                Remove From Favourites
               </Button>
             )}
 
@@ -89,7 +89,7 @@ export default function UserDetailCard() {
       </Card>
       {showModal[0] && (
         <Modal>
-          <h1>Remove User From Favorites ?</h1>
+          <h1>Remove User From Favourites ?</h1>
           <Button
             variant="primary"
             className="mt-3 ms-2"

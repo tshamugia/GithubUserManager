@@ -30,7 +30,7 @@ export function Header() {
               Search
             </NavLink>
             <NavLink className="nav-link" to={ROUTES.FAVORITE}>
-              Favorite
+              Favourite
             </NavLink>
             <Navbar.Collapse className="justify-content-end">
               <Navbar.Text as="div" className="mx-1 fst-italic">

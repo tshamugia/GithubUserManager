@@ -25,23 +25,17 @@ export default function Repository() {
       {repos.slice(0, 10).map((repo) => (
         <Card style={{ width: '53.5rem' }} className="mt-2" key={repo.id}>
           <Card.Body className="shadow">
-            <Card.Title>
-              <span>
-                <strong>Name:</strong>
-              </span>
-              {repo.name}
+            <Card.Title className="text-primary">
+              <strong>Name:</strong>
+              <span className="text-info">{repo.name}</span>
             </Card.Title>
-            <Card.Title>
-              <span>
-                <strong>Stars:</strong>
-              </span>
-              {repo.stargazers_count}
+            <Card.Title className="text-primary">
+              <strong>Stars: </strong>
+              <span className="text-info">{repo.stargazers_count}</span>
             </Card.Title>
-            <Card.Title>
-              <span>
-                <strong>Forks: </strong>
-              </span>
-              {repo.forks}
+            <Card.Title className="text-primary">
+              <strong>Forks: </strong>
+              <span className="text-info">{repo.forks}</span>
             </Card.Title>
             <Card.Link href={repo.html_url} className="text-decoration-none">
               Go To Repository
