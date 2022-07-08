@@ -87,10 +87,10 @@ export function Search() {
                       Followers: {user.followers}
                     </Card.Title>
                     <Card.Title className="text-primary">
-                      Followings: {user.followings}
+                      Following: {user.followings}
                     </Card.Title>
                     <Card.Title className="text-primary">
-                      Repository: {user.public_repos}
+                      Repositories: {user.public_repos}
                     </Card.Title>
 
                     <Link to={ROUTES.USER.replace(':id', user.login)}>
